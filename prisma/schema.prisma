@@ -1,0 +1,23 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Event {
+  id        Int     @id @default(autoincrement())
+  eventName String
+  password  String
+  images    Image[]
+}
+
+model Image {
+  id      Int    @id @default(autoincrement())
+  url     String
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId Int
+}
